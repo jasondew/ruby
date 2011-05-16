@@ -284,7 +284,7 @@ module Logging
         log.print(open {yield @log})
       ensure
         @log.close if @log and not @log.closed?
-        File::open(tmplog) {|t| FileUtils.copy_stream(t, log)}
+        File::open(tmplog) {|t| FileUtils.copy_stream(t, log)} if File.exist?(tmplog)
         @log, @logfile, @orgout, @orgerr = log, *save
         @postpone -= 1
         rm_f tmplog
@@ -601,7 +601,7 @@ int main() {printf("%d\\n", conftest_const); return 0;}
 end
 
 # You should use +have_func+ rather than +try_func+.
-# 
+#
 # [+func+] a String which contains a symbol name
 # [+libs+] a String which contains library names.
 # [+headers+] a String or an Array of strings which contains
@@ -691,7 +691,7 @@ def macro_defined?(macro, src, opt = "", &b)
 SRC
 end
 
-# Returns whether or not 
+# Returns whether or not
 # * the +src+ can be compiled as a C source,
 # * the result object can be linked with its depending libraries successfully,
 # * the linked file can be invoked as an executable
@@ -1754,7 +1754,7 @@ end
 
 # Processes the data contents of the "depend" file.
 # Each line of this file is expected to be a file name.
-# 
+#
 # Returns the output of findings, in Makefile format.
 #
 def depend_rules(depend)
